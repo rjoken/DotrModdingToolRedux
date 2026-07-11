@@ -84,6 +84,8 @@ public class GameplayPatchesWindow : IImGuiWindow
     [JsonInclude] public bool bSaveMusic;
     [JsonInclude] public bool bSandBoxMode;
 
+    [JsonInclude] public bool bPiercingDamage;
+
     [JsonInclude] public int CurrentRule;
     public static string[] RuleList = new[] { "Normal", "No requirements post game", "No requirements" };
 
@@ -610,6 +612,14 @@ public class GameplayPatchesWindow : IImGuiWindow
             ImGui.BeginTooltip();
             ImGui.Text("Unlocks all duels at all times");
             ImGui.TextColored(new GuiColour(Color.Orange).value, "NOTE: This only works when pressing continue.\nTo work with a new game:\nCreate a new game save and then press continue from the menu screen.");
+            ImGui.EndTooltip();
+        }
+
+        ImGui.Checkbox("Piercing damage", ref bPiercingDamage);
+        if(ImGui.IsItemHovered())
+        {
+            ImGui.BeginTooltip();
+            ImGui.Text("Allows piercing damage to be applied to monsters with DEF lower than the attacking monster's ATK via effect ID 3");
             ImGui.EndTooltip();
         }
 
