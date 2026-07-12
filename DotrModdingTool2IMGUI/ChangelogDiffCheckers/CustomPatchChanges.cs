@@ -16,6 +16,7 @@ public class CustomPatchSnapshot
     public bool bToonLeaderLandChange;
     public bool bAllKindsExtraSlots;
     public bool bSaveMusic;
+    public bool bPiercingDamage;
     public int CurrentRule;
     public int[] rankExp;
     public int[] SpecialThreeInARows;

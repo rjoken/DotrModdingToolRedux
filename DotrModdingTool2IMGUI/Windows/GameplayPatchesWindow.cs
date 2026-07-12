@@ -65,6 +65,10 @@ public class GameplayPatchesWindow : IImGuiWindow
     static int TaTuto_DrawTrapArea = 0x27F700 - DataAccess.IsoSlusRamOffset;
     static int AI_Tut_05 = 0x17AA70 - DataAccess.IsoSlusRamOffset;
 
+    static int doAtkEfcLocation = 0x00262218 - DataAccess.IsoSlusRamOffset;
+    static int battleLocation = 0x00247320 - DataAccess.IsoSlusRamOffset;
+    static int codeCaveLocation = 0x00351300 - DataAccess.IsoSlusRamOffset;
+
     #region Toggle only
 
     [JsonInclude] public bool bAiDoubleTap;
@@ -679,6 +683,7 @@ public class GameplayPatchesWindow : IImGuiWindow
         bAllKindsExtraSlots = new AllKindsExtraCardLeaderAbility().IsApplied();
 
         bSandBoxMode = new SandboxModePatch().IsApplied();
+        bPiercingDamage = new PiercingDamageAttackEffect().IsApplied();
         ReadValuesFromIso();
         ReadAiPatches();
     }
@@ -896,6 +901,7 @@ public class GameplayPatchesWindow : IImGuiWindow
         new AiGiveJoeyReviveMission().ApplyOrRemove(bGiveJoeyReviveMission);
         new AiFixYugiRaigeki().ApplyOrRemove(bYugiRaigeki);
         new AiFixTeaInsectImitation().ApplyOrRemove(bTeaInsectImitation);
+        new PiercingDamageAttackEffect().ApplyOrRemove(bPiercingDamage);
         SaveCustomSlots();
 
         new SandboxModePatch().ApplyOrRemove(bSandBoxMode);
