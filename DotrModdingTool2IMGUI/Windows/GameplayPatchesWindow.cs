@@ -65,6 +65,10 @@ public class GameplayPatchesWindow : IImGuiWindow
     static int TaTuto_DrawTrapArea = 0x27F700 - DataAccess.IsoSlusRamOffset;
     static int AI_Tut_05 = 0x17AA70 - DataAccess.IsoSlusRamOffset;
 
+    static int doAtkEfcLocation = 0x00262218 - DataAccess.IsoSlusRamOffset;
+    static int battleLocation = 0x00247320 - DataAccess.IsoSlusRamOffset;
+    static int codeCaveLocation = 0x00351300 - DataAccess.IsoSlusRamOffset;
+
     #region Toggle only
 
     [JsonInclude] public bool bAiDoubleTap;
@@ -83,6 +87,8 @@ public class GameplayPatchesWindow : IImGuiWindow
     [JsonInclude] public bool bAllKindsExtraSlots;
     [JsonInclude] public bool bSaveMusic;
     [JsonInclude] public bool bSandBoxMode;
+
+    [JsonInclude] public bool bPiercingDamage;
 
     [JsonInclude] public int CurrentRule;
     public static string[] RuleList = new[] { "Normal", "No requirements post game", "No requirements" };
@@ -613,6 +619,14 @@ public class GameplayPatchesWindow : IImGuiWindow
             ImGui.EndTooltip();
         }
 
+        ImGui.Checkbox("Piercing damage", ref bPiercingDamage);
+        if(ImGui.IsItemHovered())
+        {
+            ImGui.BeginTooltip();
+            ImGui.Text("Allows piercing damage to be applied to monsters with DEF lower than the attacking monster's ATK via effect ID 3");
+            ImGui.EndTooltip();
+        }
+
 
         ImGui.Separator();
         ImGui.Text("AI Patches");
@@ -669,6 +683,7 @@ public class GameplayPatchesWindow : IImGuiWindow
         bAllKindsExtraSlots = new AllKindsExtraCardLeaderAbility().IsApplied();
 
         bSandBoxMode = new SandboxModePatch().IsApplied();
+        bPiercingDamage = new PiercingDamageAttackEffect().IsApplied();
         ReadValuesFromIso();
         ReadAiPatches();
     }
@@ -886,6 +901,7 @@ public class GameplayPatchesWindow : IImGuiWindow
         new AiGiveJoeyReviveMission().ApplyOrRemove(bGiveJoeyReviveMission);
         new AiFixYugiRaigeki().ApplyOrRemove(bYugiRaigeki);
         new AiFixTeaInsectImitation().ApplyOrRemove(bTeaInsectImitation);
+        new PiercingDamageAttackEffect().ApplyOrRemove(bPiercingDamage);
         SaveCustomSlots();
 
         new SandboxModePatch().ApplyOrRemove(bSandBoxMode);
